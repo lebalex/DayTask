@@ -48,7 +48,7 @@ public class CalendarHelper {
                     String id = cursor.getString(0);
                     String name = cursor.getString(1);
                     String displayName = cursor.getString(2);
-                    if (name.contains("gmail.com"))
+                    if (name!=null && name.contains("gmail.com"))
                         calendarIds.add(id);
                 }
 
@@ -71,7 +71,7 @@ public class CalendarHelper {
                 for (String id : calendarIds) {
 
                     Cursor eventCursor = contentResolver.query(Uri.parse("content://com.android.calendar/events"),
-                            (new String[]{"calendar_id", "title", "description", "dtstart", "dtend", "eventTimezone", "eventLocation", "allDay", "rrule"}),
+                            (new String[]{"calendar_id", "title", "description", "dtstart", "dtend", "eventTimezone", "eventLocation", "allDay", "rrule", "_id", "rdate", "original_id","eventStatus"}),
                             "deleted=0 and ((dtstart >=" + d1 + " and dtstart<" + d2 + ") or rrule is not null)  and calendar_id=" + id, null, "dtstart ASC");
 //"deleted=0 and (dtstart >=" + d1 + " and dtstart<" + d2 + ") and calendar_id=" + id
                     if (eventCursor.getCount() > 0) {
@@ -86,7 +86,13 @@ public class CalendarHelper {
                                 //final Date end = new Date(eventCursor.getLong(4));
                                 final int all_day = eventCursor.getInt(7);
                                 final String rrule = eventCursor.getString(8);
+                                String _id = eventCursor.getString(9);
+                                final String rdate = eventCursor.getString(10);
 
+                                final String original_id = eventCursor.getString(11);
+                                if(original_id!=null)
+                                    _id = original_id;
+                                final String eventStatus = eventCursor.getString(12);
 
 
                                 Calendar bd = Calendar.getInstance();
@@ -112,8 +118,15 @@ public class CalendarHelper {
                                         && bd.get(Calendar.MONTH) == calendar.get(Calendar.MONTH)
                                         && bd.get(Calendar.YEAR) == calendar.get(Calendar.YEAR) && title!=null) {
                                     //сегодня
-                                    addToList(all_day, title, bd);
-                                    count++;
+                                    if(eventStatus.equalsIgnoreCase("2"))
+                                    {
+                                        if(fintFromList(Integer.parseInt(_id), title, bd, true))
+                                            count--;
+                                    }else {
+                                        if(addToList(Integer.parseInt(_id), all_day, title, bd))
+                                            count++;
+                                    }
+
                                 }
                             }
                             while (eventCursor.moveToNext());
@@ -152,18 +165,38 @@ public class CalendarHelper {
 
     }
 
-    private void addToList(int all_day, String title, Calendar bd) {
-        if (all_day == 1)
-            eventList.add(new ListTasks(null, title));
-        else {
+    private boolean fintFromList(int _id, String title, Calendar bd, boolean delete) {
+        boolean result = false;
+        for (ListTasks l : eventList
+                ) {
+            if (l.getTitle().equalsIgnoreCase(title) && l.getCalen().equals(bd) && l.getId() == _id) {
+                if(delete) eventList.remove(l);
+                result = true;
+            }
+        }
+            return result;
+    }
+
+
+    private boolean addToList(int _id, int all_day, String title, Calendar bd){
+        boolean result = false;
+        if (all_day == 1) {
+            if (!fintFromList(_id, title, bd, false)) {
+                eventList.add(new ListTasks(_id, null, title, bd));
+                result = true;
+            }
+        } else {
             String h = "" + bd.get((Calendar.HOUR_OF_DAY));
             if (bd.get((Calendar.HOUR_OF_DAY)) < 10)
                 h = "0" + bd.get((Calendar.HOUR_OF_DAY));
             String m = "" + bd.get((Calendar.MINUTE));
             if (bd.get((Calendar.MINUTE)) < 10)
                 m = "0" + bd.get((Calendar.MINUTE));
-            //eventList.add(h+":"+m+" "+title);
-            eventList.add(new ListTasks(h + ":" + m, title));
+            if (!fintFromList(_id, title, bd, false)) {
+                eventList.add(new ListTasks(_id, h + ":" + m, title, bd));
+                result = true;
+            }
         }
+        return result;
     }
 }
