@@ -28,7 +28,7 @@
         <receiver
             android:name=".DayTaskWidget"
             android:icon="@mipmap/ic_launcher"
-            android:label="DayTask Widget">
+            android:label="@string/app_name">
             <intent-filter>
                 <action android:name="android.appwidget.action.APPWIDGET_UPDATE" />
                 <action android:name="xyz.lebalex.daytask.action.ACTION_MANUAL_UPDATE" />

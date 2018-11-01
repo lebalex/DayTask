@@ -1,7 +1,5 @@
 <resources>
     <string name="app_name">Задачи на день</string>
-    <string name="appwidget_text">EXAMPLE</string>
-    <string name="add_widget">Add widget</string>
     <string name="not_events">Задач на сегодня нет</string>
     <string name="today_event">Задачи на день</string>
 </resources>
