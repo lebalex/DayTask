@@ -89,7 +89,7 @@ public class MainActivity extends AppCompatActivity {
         setSupportActionBar(toolbar);
 
 
-        MobileAds.initialize(this, "ca-app-pub-6392397454770928/1263238767");
+        MobileAds.initialize(this, "ca-app-pub-6392397454770928~5034042594");
 
         AdView mAdView = (AdView) findViewById(R.id.adView);
         mAdView.loadAd(new AdRequest.Builder()
