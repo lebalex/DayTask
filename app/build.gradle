@@ -6,8 +6,8 @@ android {
         applicationId "xyz.lebalex.daytask"
         minSdkVersion 19
         targetSdkVersion 27
-        versionCode 32
-        versionName '1.0.32'
+        versionCode 36
+        versionName '1.0.36'
         testInstrumentationRunner "android.support.test.runner.AndroidJUnitRunner"
         setProperty("archivesBaseName", "daytask-$versionName")
     }
@@ -30,8 +30,8 @@ dependencies {
     implementation 'com.android.support:design:27.+'
     implementation 'com.android.support:support-v4:27.+'
     implementation 'com.google.android.gms:play-services-ads:17.0.0'
-
-
-
+    //implementation 'com.google.firebase:firebase-ads:17.0.0'
+    implementation 'com.google.firebase:firebase-core:16.0.4'
 
 }
+apply plugin: 'com.google.gms.google-services'
