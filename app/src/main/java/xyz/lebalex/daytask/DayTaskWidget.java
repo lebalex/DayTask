@@ -4,36 +4,16 @@ package xyz.lebalex.daytask;
  * Created by ivc_lebedevav on 30.01.2017.
  */
 
-import android.app.AlarmManager;
-import android.app.Notification;
-import android.app.NotificationChannel;
-import android.app.NotificationManager;
-import android.app.PendingIntent;
 import android.appwidget.AppWidgetManager;
 import android.appwidget.AppWidgetProvider;
 import android.content.ComponentName;
-import android.content.ContentResolver;
 import android.content.Context;
 import android.content.Intent;
-import android.content.SharedPreferences;
-import android.database.Cursor;
-import android.net.Uri;
-import android.os.Build;
 import android.os.StrictMode;
-import android.provider.CalendarContract;
-import android.support.annotation.Nullable;
-import android.support.v4.app.NotificationCompat;
-import android.support.v4.app.NotificationManagerCompat;
-import android.util.Log;
-import android.widget.RemoteViews;
 
-import java.util.Calendar;
-import java.util.Date;
-import java.util.HashSet;
-import java.util.List;
-
-import static android.content.Context.NOTIFICATION_SERVICE;
-import static android.preference.PreferenceManager.getDefaultSharedPreferences;
+import androidx.annotation.Nullable;
+import androidx.core.app.NotificationCompat;
+import androidx.core.app.NotificationManagerCompat;
 
 public class DayTaskWidget extends AppWidgetProvider {
 

@@ -1,26 +1,15 @@
 package xyz.lebalex.daytask;
 
 import android.app.AlarmManager;
-import android.app.Notification;
-import android.app.NotificationChannel;
-import android.app.NotificationManager;
 import android.app.PendingIntent;
-import android.appwidget.AppWidgetManager;
 import android.content.BroadcastReceiver;
-import android.content.ComponentName;
 import android.content.Context;
 import android.content.Intent;
-import android.content.IntentFilter;
-import android.content.SharedPreferences;
-import android.os.Build;
-import android.os.Bundle;
 import android.os.StrictMode;
-import android.preference.PreferenceManager;
-import android.support.v4.app.NotificationCompat;
-import android.support.v4.content.WakefulBroadcastReceiver;
+
+import androidx.core.app.NotificationCompat;
+
 import android.util.Log;
-import android.widget.RemoteViews;
-import android.widget.Toast;
 
 import java.util.Calendar;
 import java.util.List;
