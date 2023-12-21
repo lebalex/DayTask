@@ -39,7 +39,7 @@ public class WidgetHelper {
             Intent configIntent = new Intent(ctx, MainActivity.class);
             configIntent.setAction(ConstClass.ACTION_MANUAL_UPDATE);
             PendingIntent pIntent = PendingIntent.getActivity(ctx, widgetID,
-                    configIntent, 0);
+                    configIntent, PendingIntent.FLAG_IMMUTABLE);
 
             widgetView.setOnClickPendingIntent(R.id.bg, pIntent);
 

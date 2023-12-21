@@ -34,7 +34,7 @@ public class DayTaskServiceReceiver extends BroadcastReceiver {
             Intent alarmIntent = new Intent(context, DayTaskServiceReceiver.class);
             alarmIntent.addFlags(Intent.FLAG_RECEIVER_FOREGROUND);
             PendingIntent pendingIntent;
-            pendingIntent = PendingIntent.getBroadcast(context, 1011, alarmIntent, PendingIntent.FLAG_CANCEL_CURRENT);
+            pendingIntent = PendingIntent.getBroadcast(context, 1011, alarmIntent, PendingIntent.FLAG_IMMUTABLE);
             AlarmManager manager = (AlarmManager) context.getSystemService(Context.ALARM_SERVICE);
 
 

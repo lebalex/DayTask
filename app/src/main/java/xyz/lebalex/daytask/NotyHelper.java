@@ -20,14 +20,14 @@ import java.util.List;
 public class NotyHelper {
     public void setNoty(Context ctx, List<ListTasks> listTask, String action) throws Exception
     {
-        Log.d("TaskMain","setNoty");
+        //Log.d("TaskMain","setNoty");
         if(listTask.size()>0) {
 
             String GROUP_KEY_WORK_EMAIL = "xyz.lebalex.daytask.TASK_NOTY";
             Bitmap bitmap = BitmapFactory.decodeResource(ctx.getResources(), R.drawable.ic_noty_lage);
             List<Notification> mNotification = new ArrayList<Notification>();
             Intent ii = new Intent(ctx.getApplicationContext(), MainActivity.class);
-            PendingIntent pendingIntent = PendingIntent.getActivity(ctx, 0, ii, 0);
+            PendingIntent pendingIntent = PendingIntent.getActivity(ctx, 0, ii, PendingIntent.FLAG_IMMUTABLE);
 
             for (ListTasks a: listTask) {
                 String allDay="весь день";
@@ -40,12 +40,14 @@ public class NotyHelper {
                         .setContentTitle(allDay)
                         .setContentText(a.getTitle())
                         .setGroup(GROUP_KEY_WORK_EMAIL)
-                        .setPriority(Notification.PRIORITY_MAX)
+                        //.setPriority(Notification.PRIORITY_MAX)
                 .setOngoing(true)
                 .setAutoCancel(false)
 
                         .build();
                 mNotification.add(newMessageNotification);
+
+
             }
 
 
@@ -61,28 +63,28 @@ public class NotyHelper {
             String time = calen.get(Calendar.HOUR_OF_DAY)+":"+calen.get(Calendar.MINUTE)+":"+calen.get(Calendar.SECOND);
 
 
+            if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.N && mNotification.size() > 1) {
 
+                Notification summaryNotification =
+                        new NotificationCompat.Builder(ctx.getApplicationContext(), "notify_001")
+                                .setContentIntent(pendingIntent)
+                                .setContentTitle(ctx.getString(R.string.today_event))
+                                //.setContentText("У вас "+Integer.toString(listTask.size())+task+" "+time)
+                                .setSmallIcon(R.drawable.ic_noty)
 
-            Notification summaryNotification =
-                    new NotificationCompat.Builder(ctx.getApplicationContext(), "notify_001")
-                            .setContentIntent(pendingIntent)
-                            .setContentTitle(ctx.getString(R.string.today_event))
-                            //.setContentText("У вас "+Integer.toString(listTask.size())+task+" "+time)
-                            .setSmallIcon(R.drawable.ic_noty)
+                                .setStyle(new NotificationCompat.InboxStyle()
+                                        .setSummaryText("У вас " + Integer.toString(listTask.size()) + task + " " + time))
 
-                            .setStyle(new NotificationCompat.InboxStyle()
-                                    .setSummaryText("У вас "+Integer.toString(listTask.size())+task+" "+time))
+                                .setGroup(GROUP_KEY_WORK_EMAIL)
+                                .setGroupSummary(true)
+                                .setOngoing(true)
+                                .setAutoCancel(false)
+                                //.setPriority(Notification.PRIORITY_MAX)
+                                //.setLargeIcon(bitmap)
 
-                            .setGroup(GROUP_KEY_WORK_EMAIL)
-                            .setGroupSummary(true)
-                            .setOngoing(true)
-                            .setAutoCancel(false)
-                            .setPriority(Notification.PRIORITY_MAX)
-                            //.setLargeIcon(bitmap)
-
-                            .build();
-
-
+                                .build();
+                mNotification.add(summaryNotification);
+            }
 
 
             NotificationManager mNotificationManager =
@@ -92,7 +94,8 @@ public class NotyHelper {
             if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.O) {
                 NotificationChannel channel = new NotificationChannel("notify_001",
                         "Channel human readable title",
-                        NotificationManager.IMPORTANCE_LOW);
+                        NotificationManager.IMPORTANCE_HIGH
+                );
                 mNotificationManager.createNotificationChannel(channel);
             }
 
@@ -100,7 +103,7 @@ public class NotyHelper {
             for (Notification a: mNotification)
                 mNotificationManager.notify(++notyNumber, a);
 
-            mNotificationManager.notify(270177, summaryNotification);
+            //mNotificationManager.notify(270177, summaryNotification);
 
 
 
