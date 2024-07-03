@@ -2,4 +2,6 @@
     <string name="app_name">Задачи на день</string>
     <string name="not_events">Задач на сегодня нет</string>
     <string name="today_event">Задачи на день</string>
+    <string name="politic">Privacy Policy</string>
+    <string name="politic_link">https://lebalex.ru/politic_daytask.html</string>
 </resources>
