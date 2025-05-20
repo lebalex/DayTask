@@ -91,12 +91,14 @@ public class CalendarHelper {
                                 final String rdate = eventCursor.getString(10);
 
                                 final String original_id = eventCursor.getString(11);
-                                if(original_id!=null)
+                                if (original_id != null)
                                     _id = original_id;
                                 final String eventStatus = eventCursor.getString(12);
 
+                                if (eventStatus != null){
 
-                                Calendar bd = Calendar.getInstance();
+
+                                    Calendar bd = Calendar.getInstance();
                                 bd.setTime(begin);
 
                                 if (rrule != null) {
@@ -117,18 +119,18 @@ public class CalendarHelper {
                                 }
                                 if (bd.get(Calendar.DATE) == calendar.get(Calendar.DATE)
                                         && bd.get(Calendar.MONTH) == calendar.get(Calendar.MONTH)
-                                        && bd.get(Calendar.YEAR) == calendar.get(Calendar.YEAR) && title!=null) {
+                                        && bd.get(Calendar.YEAR) == calendar.get(Calendar.YEAR) && title != null) {
                                     //сегодня
-                                    if(eventStatus.equalsIgnoreCase("2"))
-                                    {
-                                        if(fintFromList(Integer.parseInt(_id), title, bd, true))
+                                    if (eventStatus.equalsIgnoreCase("2")) {
+                                        if (fintFromList(Integer.parseInt(_id), title, bd, true))
                                             count--;
-                                    }else {
-                                        if(addToList(Integer.parseInt(_id), all_day, title, bd))
+                                    } else {
+                                        if (addToList(Integer.parseInt(_id), all_day, title, bd))
                                             count++;
                                     }
 
                                 }
+                            }
                             }
                             while (eventCursor.moveToNext());
                         }
@@ -138,7 +140,7 @@ public class CalendarHelper {
 
             }
         } catch (AssertionError ex) {
-            Log.d("day task", ex.getMessage());
+            Log.d("day task", ex.getMessage(),ex);
         }
         return eventList;
     }
