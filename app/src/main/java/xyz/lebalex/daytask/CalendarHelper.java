@@ -194,7 +194,7 @@ public class CalendarHelper {
         boolean result = false;
         if (all_day == 1) {
             if (!fintFromList(_id, title, bd, false)) {
-                eventList.add(new ListTasks(_id, null, title, bd));
+                eventList.add(new ListTasks(_id, "День", title, bd));
                 result = true;
             }
         } else {
