@@ -17,6 +17,7 @@ import java.util.ArrayList;
 import java.util.Calendar;
 import java.util.Date;
 import java.util.HashSet;
+import java.util.Iterator;
 import java.util.List;
 import java.util.Locale;
 import java.util.regex.Matcher;
@@ -167,13 +168,22 @@ public class CalendarHelper {
 
     private boolean fintFromList(int _id, String title, Calendar bd, boolean delete) {
         boolean result = false;
-        for (ListTasks l : eventList
+        Iterator<ListTasks> l = eventList.iterator();
+        while(l.hasNext())
+        {
+            ListTasks item = l.next();
+            if (item.getTitle().equalsIgnoreCase(title) && item.getCalen().equals(bd) && item.getId() == _id) {
+                if(delete) l.remove();
+                result = true;
+            }
+        }
+        /*for (ListTasks l : eventList
                 ) {
             if (l.getTitle().equalsIgnoreCase(title) && l.getCalen().equals(bd) && l.getId() == _id) {
                 if(delete) eventList.remove(l);
                 result = true;
             }
-        }
+        }*/
             return result;
     }
 

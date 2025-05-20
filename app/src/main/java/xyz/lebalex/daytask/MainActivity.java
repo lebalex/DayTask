@@ -140,6 +140,7 @@ public class MainActivity extends AppCompatActivity {
             lvMain.setEmptyView(findViewById(R.id.emptyElement));
         }catch(Exception e)
         {
+            Log.e("TaskMain",e.getMessage(),e);
             Log.d("TaskMain",e.getMessage());
         }
     }
